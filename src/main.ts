@@ -1,19 +1,19 @@
-import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
-
-
-import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
+import {
+  provideHttpClient,
+  withInterceptorsFromDi,
+} from '@angular/common/http';
+import { importProvidersFrom } from '@angular/core';
 import { BrowserModule, bootstrapApplication } from '@angular/platform-browser';
 import { provideNoopAnimations } from '@angular/platform-browser/animations';
-import { AppRoutingModule } from './app/app-routing.module';
+import { provideRouter } from '@angular/router';
 import { AppComponent } from './app/app.component';
-import { importProvidersFrom } from '@angular/core';
-
+import { APP_ROUTES } from './app/app.routes';
 
 bootstrapApplication(AppComponent, {
-    providers: [
-        importProvidersFrom(BrowserModule, AppRoutingModule),
-        provideHttpClient(withInterceptorsFromDi()),
-        provideNoopAnimations(),
-    ]
-})
-  .catch(err => console.error(err));
+  providers: [
+    importProvidersFrom(BrowserModule),
+    provideHttpClient(withInterceptorsFromDi()),
+    provideNoopAnimations(),
+    provideRouter(APP_ROUTES),
+  ],
+}).catch((err) => console.error(err));
