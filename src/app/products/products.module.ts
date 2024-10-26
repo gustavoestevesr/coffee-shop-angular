@@ -7,17 +7,14 @@ import { AppMaterialModule } from '../shared/app-material.module';
 import { ProductFormComponent } from './product-form/product-form.component';
 import { ReactiveFormsModule } from '@angular/forms';
 
-
 @NgModule({
-  declarations: [
-    ProductsListComponent,
-    ProductFormComponent
-  ],
   imports: [
     CommonModule,
     ProductsRoutingModule,
     AppMaterialModule,
-    ReactiveFormsModule
-  ]
+    ReactiveFormsModule,
+    ProductsListComponent,
+    ProductFormComponent,
+  ],
 })
-export class ProductsModule { }
+export class ProductsModule {}
