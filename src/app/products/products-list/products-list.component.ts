@@ -3,7 +3,7 @@ import { Component } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Product } from '../product';
 import { ProductsService } from '../products.service';
-import { NgFor, NgIf, AsyncPipe } from '@angular/common';
+import { AsyncPipe } from '@angular/common';
 import { MatCard, MatCardContent } from '@angular/material/card';
 import { MatIconButton } from '@angular/material/button';
 import { MatIcon } from '@angular/material/icon';
@@ -13,7 +13,7 @@ import { MatIcon } from '@angular/material/icon';
     templateUrl: './products-list.component.html',
     styleUrls: ['./products-list.component.scss'],
     standalone: true,
-    imports: [NgFor, MatCard, NgIf, MatCardContent, MatIconButton, MatIcon, AsyncPipe]
+    imports: [MatCard, MatCardContent, MatIconButton, MatIcon, AsyncPipe]
 })
 export class ProductsListComponent {
 
