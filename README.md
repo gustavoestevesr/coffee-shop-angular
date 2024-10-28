@@ -11,6 +11,14 @@ Sample project created to showcase the latest Angular features:
 
 - Visual Studio Code
 
+## Schematics
+
+- Migrating code from Module to Standalone (3x times with diferent options)
+ng generate @angular/core:standalone
+
+- Migrating code to the new Control Flow
+ng g @angular/core:control-flow
+
 ## Screenshots
 
 Main page with products list:
