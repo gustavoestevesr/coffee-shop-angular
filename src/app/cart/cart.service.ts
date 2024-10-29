@@ -1,5 +1,4 @@
 import { computed, Injectable, signal, Signal } from '@angular/core';
-import { BehaviorSubject, Observable, combineLatest, map } from 'rxjs';
 
 import { Product } from '../products/product';
 import { CartItem } from './cart-item';
@@ -60,8 +59,14 @@ export class CartService {
   }
 
   removeProduct(product: Product): void {
-    this.cartItems.update((items) =>
-      items.filter((item) => item.product.id === product.id)
-    );
+    const itemFound = this.cartItems().findIndex((item) => item.product.id === product.id);
+    if (itemFound !== -1) {
+      this.cartItems.update((items) => {
+        const updatedItems = [...items];
+        updatedItems.splice(itemFound, 1);
+        return updatedItems;
+      });
+    }
   }
+
 }
