@@ -52,10 +52,12 @@ export class ProductFormComponent {
 
   onSubmit() {
     if (this.form.valid) {
-      this.productsService.create(this.form.value as Product).subscribe({
-        next: () => this.onSuccess(),
-        error: () => this.onError()
-      });
+      const productsAdded = this.productsService.create(this.form.value as Product)
+      if (productsAdded !== null) {
+        this.onSuccess()
+      } else {
+        this.onError()
+      }
     } else {
       this.formUtils.validateAllFormFields(this.form);
     }

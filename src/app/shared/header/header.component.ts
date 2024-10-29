@@ -1,5 +1,5 @@
 import { CartService } from './../../cart/cart.service';
-import { Component } from '@angular/core';
+import { Component, Signal } from '@angular/core';
 import { Observable } from 'rxjs';
 import { MatToolbar } from '@angular/material/toolbar';
 import { MatIconButton } from '@angular/material/button';
@@ -16,9 +16,9 @@ import { AsyncPipe } from '@angular/common';
 })
 export class HeaderComponent {
 
-  cartCount$: Observable<number>;
+  cartCount: Signal<number>;
 
   constructor(private cartService: CartService) {
-    this.cartCount$ = this.cartService.cartCount$;
+    this.cartCount = this.cartService.cartCount;
   }
 }

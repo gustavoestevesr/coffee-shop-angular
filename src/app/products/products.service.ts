@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, signal, Signal } from '@angular/core';
 import { Product } from './product';
 import { HttpClient } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
@@ -8,7 +8,7 @@ import { Observable, of } from 'rxjs';
 })
 export class ProductsService {
 
-  private products: Product[] = [];
+  private products = signal<Product[]>([]);
 
   private readonly API = `/products`;
   private readonly isLocal = true;
@@ -16,38 +16,50 @@ export class ProductsService {
 
   constructor(private http: HttpClient) { }
 
-  load(): Observable<Product[]> {
+  load(): Signal<Product[]> {
     if (this.isLocal) {
       if (!this.listLoaded) {
-        this.listLoaded = true
+        this.listLoaded = true;
         for (let num = 1; num <= 10; num++) {
           this.addProducts(num);
         }
       }
-
-      return of(this.products);
+      return this.products; // Return the signal directly
+    } else {
+      this.http.get<Product[]>(this.API).subscribe((data) => {
+        this.products.set(data); // Update the signal with fetched products
+      });
     }
-    return this.http.get<Product[]>(this.API);
+    return this.products; // Return the signal even if not yet updated
   }
 
-  create(product: Product): Observable<Product> {
+  create(product: Product): Signal<Product[]> {
     if (this.isLocal) {
-      this.products.push(product);
-      return of(product);
+      this.products.update((currentProducts) => [...currentProducts, product]); // Adiciona o novo produto ao signal
+      return this.products; // Retorna o signal atualizado
     }
-    return this.http.post<Product>(this.API, product);
+
+    // Se não for local, faz a requisição POST e retorna o signal.
+    this.http.post<Product>(this.API, product).subscribe((newProduct) => {
+      this.products.update((currentProducts) => [...currentProducts, newProduct]); // Atualiza o signal com o novo produto
+    });
+
+    return this.products; // Retorna o signal, mesmo que não tenha sido atualizado ainda
   }
 
   private addProducts(i: number): void {
-    this.products.push({
-      id: `${i}`,
-      price: parseFloat((Math.random() * (0.0 - 10.0) + 10.0).toFixed(2)),
-      status: ['', '', '', 'sale'][Math.floor(Math.random() * 4)],
-      discounted: ['', '', '', 'discounted'][Math.floor(Math.random() * 4)],
-      discount: parseFloat((Math.random() * (0.0 - 10.0) + 10.0).toFixed(2)),
-      name: ['Coffee'][Math.floor(Math.random() * 1)],
-      description: ['B & W', 'Grey', 'Black', 'Green', 'Black'][Math.floor(Math.random() * 5)],
-      image: `${i}`
-    });
+    this.products.update((currentProducts) => [
+      ...currentProducts,
+      {
+        id: `${i}`,
+        price: parseFloat((Math.random() * (0.0 - 10.0) + 10.0).toFixed(2)),
+        status: ['', '', '', 'sale'][Math.floor(Math.random() * 4)],
+        discounted: ['', '', '', 'discounted'][Math.floor(Math.random() * 4)],
+        discount: parseFloat((Math.random() * (0.0 - 10.0) + 10.0).toFixed(2)),
+        name: ['Coffee'][Math.floor(Math.random() * 1)],
+        description: ['B & W', 'Grey', 'Black', 'Green', 'Black'][Math.floor(Math.random() * 5)],
+        image: `${i}`
+      }
+    ]);
   }
 }
