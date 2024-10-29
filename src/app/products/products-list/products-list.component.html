@@ -1,5 +1,8 @@
 <div class="parent">
   @for (product of products(); track product) {
-  <app-product-item [product]="product"></app-product-item>
+  <app-product-item
+    [product]="product"
+    (productSelected)="addProductToCart($event)"
+  ></app-product-item>
   }
 </div>

@@ -7,6 +7,7 @@ import { CurrencyPipe } from '@angular/common';
 import { MatOption } from '@angular/material/core';
 import { MatMiniFabButton } from '@angular/material/button';
 import { MatIcon } from '@angular/material/icon';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
     selector: 'app-cart-item',
@@ -22,6 +23,7 @@ export class CartItemComponent {
   quantityOptions = [1, 2, 3, 4, 5];
 
   cartService = inject(CartService)
+  toastr = inject(ToastrService)
 
   onQuantityChange(quantity: number, cartItem: CartItem) {
     cartItem.quantity = quantity;
@@ -29,6 +31,9 @@ export class CartItemComponent {
   }
 
   onRemove(): void {
+    this.toastr.success(`Product removed from the cart.`, 'Success', {
+      progressBar: true,
+    })
     this.cartService.removeProduct(this.cartItem.product);
   }
 }
