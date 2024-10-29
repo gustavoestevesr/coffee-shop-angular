@@ -7,6 +7,8 @@ Sample project created to showcase the latest Angular features:
 - Signals (Angular v16)
 - Input Validation (Angular v16)
 
+One of the main ideas of the project is to refactor the old way of creating the project with modules
+
 ## ⌨️ Editor / IDE
 
 - Visual Studio Code
@@ -18,6 +20,16 @@ ng generate @angular/core:standalone
 
 - Migrating code to the new Control Flow
 ng g @angular/core:control-flow
+
+## Refactoring
+
+- Injects with Services
+- Modules and Components to Standalone
+- Behavior Subject and Observables to Signals
+- Data Binding: Input() and Output()
+- New ControlFlow: @NgIf, @NgFor
+- Performance: trackBy, Lazy Loading Routing, Imports in each Component
+- 
 
 ## Screenshots
 
