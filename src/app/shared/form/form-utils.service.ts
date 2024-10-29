@@ -6,8 +6,6 @@ import { UntypedFormArray, UntypedFormControl, UntypedFormGroup } from '@angular
 })
 export class FormUtilsService {
 
-  constructor() { }
-
   validateAllFormFields(formGroup: UntypedFormGroup | UntypedFormArray) {
     Object.keys(formGroup.controls).forEach(field => {
       const control = formGroup.get(field);

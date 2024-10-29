@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, inject, Input } from '@angular/core';
 import { CartItem } from '../cart-item';
 import { CartService } from '../cart.service';
 import { MatFormField, MatLabel } from '@angular/material/form-field';
@@ -21,7 +21,7 @@ export class CartItemComponent {
 
   quantityOptions = [1, 2, 3, 4, 5];
 
-  constructor(private cartService: CartService) { }
+  cartService = inject(CartService)
 
   onQuantityChange(quantity: number, cartItem: CartItem) {
     cartItem.quantity = quantity;

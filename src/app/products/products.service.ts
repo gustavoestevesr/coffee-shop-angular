@@ -1,4 +1,4 @@
-import { Injectable, signal, Signal } from '@angular/core';
+import { inject, Injectable, signal, Signal } from '@angular/core';
 import { Product } from './product';
 import { HttpClient } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
@@ -14,7 +14,7 @@ export class ProductsService {
   private readonly isLocal = true;
   private listLoaded = false
 
-  constructor(private http: HttpClient) { }
+  http = inject(HttpClient)
 
   load(): Signal<Product[]> {
     if (this.isLocal) {

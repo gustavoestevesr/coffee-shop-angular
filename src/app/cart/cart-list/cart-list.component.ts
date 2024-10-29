@@ -1,4 +1,4 @@
-import { Component, computed, OnInit, Signal, signal, WritableSignal } from '@angular/core';
+import { Component, computed, inject, OnInit, Signal, signal, WritableSignal } from '@angular/core';
 import { Observable, of } from 'rxjs';
 
 import { CartItem } from '../cart-item';
@@ -19,8 +19,7 @@ export class CartListComponent implements OnInit {
   cartItems!: Signal<CartItem[]>;
   cartTotal = 0;
 
-  constructor(private cartService: CartService) {
-  }
+  cartService = inject(CartService)
 
   ngOnInit() {
     this.cartItems = this.cartService.getCartItems();

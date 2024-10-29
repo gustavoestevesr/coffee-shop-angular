@@ -1,5 +1,5 @@
 import { Location } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { FormControl, FormGroup, NonNullableFormBuilder, Validators, ReactiveFormsModule } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 
@@ -35,12 +35,12 @@ export class ProductFormComponent {
     discount: new FormControl(0)
   });
 
+  private snackBar = inject(MatSnackBar);
+  private location = inject(Location);
+  private productsService = inject(ProductsService);
+  public formUtils = inject(FormUtilsService);
 
-  constructor(private formBuilder: NonNullableFormBuilder,
-    private snackBar: MatSnackBar,
-    private location: Location,
-    private productsService: ProductsService,
-    public formUtils: FormUtilsService) {
+  constructor() {
     this.generateImages();
   }
 

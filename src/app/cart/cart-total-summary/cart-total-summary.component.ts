@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 
 import { CartService } from '../cart.service';
 import { MatCard, MatCardHeader, MatCardTitle, MatCardContent, MatCardActions } from '@angular/material/card';
@@ -16,5 +16,5 @@ export class CartTotalSummaryComponent {
 
   total = 10.00;
 
-  constructor(public cartService: CartService) { }
+  cartService = inject(CartService)
 }

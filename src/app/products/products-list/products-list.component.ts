@@ -1,5 +1,5 @@
 import { CartService } from './../../cart/cart.service';
-import { Component, Signal } from '@angular/core';
+import { Component, inject, Signal } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Product } from '../product';
 import { ProductsService } from '../products.service';
@@ -20,8 +20,11 @@ export class ProductsListComponent {
 
   products: Signal<Product[]>;
 
-  constructor(private service: ProductsService, private cartService: CartService) {
-    this.products = this.service.load();
+  cartService = inject(CartService)
+  productsService = inject(ProductsService)
+
+  constructor() {
+    this.products = this.productsService.load();
   }
 
   addProductToCart(product: Product): void {
